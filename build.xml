@@ -1,0 +1,30 @@
+<project name = "ant" default="build">
+
+    <property name="folder" value="./antoutput"/>
+    <property file="build.properties"/>
+
+    <target name="build" depends="clean, init, hello">
+        <!--<echo message="Hello Ant"/>-->
+        <echo message="${hello.message}"/>
+        <mkdir dir="${folder}"/>
+        <!--<javac srcdir="./src" destdir="${folder}"/>-->
+        <javac srcdir="${src.dir}" destdir="${folder}"/>
+        <java classname="hello.ant.Hello" classpath="${folder}"></java>
+    </target>
+
+    <target name="hello">
+
+        <echo message="hello helo"/>
+
+    </target>
+    <target name="init">
+        <mkdir dir = "${folder}"/>
+
+    </target>
+
+    <target name="clean">
+        <delete dir = "${folder}"/>
+
+    </target>
+
+</project>
