@@ -1,9 +1,9 @@
-<project name = "ant" default="build">
+<project name = "ant" default="deploy">
 
     <property name="folder" value="./antoutput"/>
     <property file="build.properties"/>
 
-    <target name="build" depends="clean, init, hello">
+    <target name="build" depends="clean, init, hello, deploy-zip">
         <!--<echo message="Hello Ant"/>-->
         <echo message="${hello.message}"/>
         <mkdir dir="${folder}"/>
@@ -24,6 +24,36 @@
 
     <target name="clean">
         <delete dir = "${folder}"/>
+
+    </target>
+
+    <target name="deploy" depends="build">
+        <mkdir dir="./deploy"/>
+        <!--copy to some directory or on server-->
+        <copy todir="./deploy">
+            <!--набор файлов-->
+            <fileset dir="${folder}">
+                <!--указываем маку, по которой надо выбирать-->
+                <include name="**/*"/>
+                <exclude name="l*"/>
+            </fileset>
+
+        </copy>
+
+        <!--выполнение внешний команды на локальной файловой системе-->
+        <!--<exec executable="cmd">-->
+            <!--<arg value="lalala"/>-->
+
+        <!--</exec>-->
+
+    </target>
+
+    <!--zip-уем файлы (и, допустим, отправляем zip файлы по email-->
+    <target name="deploy-zip">
+        <zip destfile="./deploy/helloAnt.zip">
+            <zipfileset dir="${folder}"/>
+
+        </zip>
 
     </target>
 
